@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="com.badlogic.gdx.Screen"/>
+<fullyQualifiedTypeName name="com.quinten.billBryson.screens.SplashScreen"/>
+<fullyQualifiedTypeName name="com.badlogic.gdx.graphics.Texture.TextureFilter"/>
+<fullyQualifiedTypeName name="com.badlogic.gdx.graphics.g2d.Sprite"/>
+<fullyQualifiedTypeName name="aurelienribon.tweenengine.Tween"/>
+<fullyQualifiedTypeName name="aurelienribon.tweenengine.TweenManager"/>
+<fullyQualifiedTypeName name="aurelienribon.tweenengine.TweenEquations"/>
+<fullyQualifiedTypeName name="aurelienribon.tweenengine.TweenEquation"/>
+<fullyQualifiedTypeName name="aurelienribon.tweenengine.TweenCallback"/>
+<fullyQualifiedTypeName name="com.quinten.billBryson.Reference"/>
+<fullyQualifiedTypeName name="com.quinten.bindIt.screens.SplashScreen"/>
+<fullyQualifiedTypeName name="com.quinten.bindIt.Reference"/>
+<fullyQualifiedTypeName name="com.badlogic.gdx.Gdx"/>
+<fullyQualifiedTypeName name="com.badlogic.gdx.graphics.GL10"/>
+</qualifiedTypeNameHistroy>
