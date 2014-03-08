@@ -1,6 +1,9 @@
 package com.quinten.arce;
 
+import java.io.FileNotFoundException;
+
 import com.badlogic.gdx.Game;
+import com.quinten.arce.game.Question;
 import com.quinten.arce.screens.MainMenu;
 import com.quinten.arce.screens.SplashScreen;
 import com.quinten.arce.screens.SubMenuScreen;
@@ -18,7 +21,27 @@ public class BillBryson extends Game
 	@Override
 	public void create()
 	{
-		setScreen(new SplashScreen(this));
+		startDisplaying();
+		loadQuestions();
+	}
+	
+	private void startDisplaying()
+	{
+		final BillBryson me = this;
+		Runnable displayScreen = new Runnable()
+		{
+			@Override
+			public void run()
+			{
+				setScreen(new SplashScreen(me));
+			}
+		};
+		new Thread(displayScreen).run();
+	}
+	
+	private void loadQuestions()
+	{
+		Question[] questions = Question.getQuestions();
 	}
 	
 	public void splashScreenCompleted()
@@ -26,7 +49,7 @@ public class BillBryson extends Game
 		setScreen(new MainMenu(this));
 	}
 	
-	public void playBonding()
+	public void subMenuScreen()
 	{
 		setScreen(new SubMenuScreen(this));
 	}
@@ -60,4 +83,9 @@ public class BillBryson extends Game
 	{
 		super.resume();
 	}
+	
+	private Question[] easyQuestions;
+	private Question[] meduimQuestions;
+	private Question[] hardQuestions;
+	private Question[] extremeQuestions;
 }

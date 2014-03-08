@@ -90,7 +90,7 @@ public class MainMenu implements Screen
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button)
 			{
 				Gdx.app.log(Reference.LOG_NAME, "play button pressed!");
-				game.playBonding();
+				game.subMenuScreen();
 			}
 		});
 		playButton.setWidth(400F);
