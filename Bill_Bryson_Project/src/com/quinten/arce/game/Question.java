@@ -27,7 +27,8 @@ public class Question
 	 * @param questionImagePath
 	 * @param answerImagePath
 	 */
-	public Question(String question, String[] answers, byte difficultyLevel, String[] questionImagePath, String[] answerImagePath)
+	public Question(String question, ArrayList<String> answers, byte difficultyLevel, 
+			ArrayList<String> questionImagePath, ArrayList<String> answerImagePath)
 	{
 		this.question = question;
 		this.answers = answers;
@@ -45,12 +46,12 @@ public class Question
 	 */
 	private Question() {}
 	
-	public static Question[] getQuestions()
+	public static ArrayList<Question> getQuestions()
 	{
 		if(fileRead.compareAndSet(false, true))
 			readQuestions();
 		
-		return Arrays.copyOf(questions.toArray(), questions.size(), Question[].class);
+		return questions;
 	}
 	
 	/**
@@ -111,9 +112,9 @@ public class Question
 			else if(upper.startsWith(CATAGORY_MARKER)) result.catagory = Catagory.deserialise(i.substring(CATAGORY_MARKER.length()));
 		}
 		
-		result.answerImagePaths = Arrays.copyOf(answerImages.toArray(), answerImages.size(), String[].class);
-		result.questionImagePaths = Arrays.copyOf(questionImages.toArray(), questionImages.size(), String[].class);
-		result.answers = Arrays.copyOf(answers.toArray(), questionImages.size(), String[].class);
+		result.answerImagePaths = answerImages;
+		result.questionImagePaths = questionImages;
+		result.answers = answers;
 		return result;
 	}
 	
@@ -127,17 +128,17 @@ public class Question
 		return question;
 	}
 	
-	public final String[] getAnswers()
+	public final ArrayList<String> getAnswers()
 	{
 		return answers;
 	}
 	
-	public final String[] getQuestionImagePaths()
+	public final ArrayList<String> getQuestionImagePaths()
 	{
 		return questionImagePaths;
 	}
 	
-	public final String[] getAnswerImagePaths()
+	public final ArrayList<String> getAnswerImagePaths()
 	{
 		return answerImagePaths;
 	}
@@ -157,9 +158,9 @@ public class Question
 	private static AtomicBoolean fileRead = new AtomicBoolean(false); 
 	
 	private String question = Reference.QUESTION_UNAVAILABLE;
-	private String[] answers = {Reference.ANSWERS_UNAVAILANLE};
+	private ArrayList<String> answers;
 	private byte difficultyLevel;
-	private String[] questionImagePaths = {};
-	private String[] answerImagePaths = {};
+	private ArrayList<String> questionImagePaths;
+	private ArrayList<String> answerImagePaths;
 	private Catagory catagory;
 }

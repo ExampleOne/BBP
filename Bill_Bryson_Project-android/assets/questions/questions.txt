@@ -1,3 +1,7 @@
 QUESTION=test
 ANSWER=test
 DIFFICULTY=5
+//This is a comment. It will be ignored, but must stand on its own line to function
+QUESTION_IMAGE_PATH=Location of question image
+ANSWER_IMAGE_PATH=Location of answer image (to be displayed when question is answered)
+CATAGORY=Chemistry

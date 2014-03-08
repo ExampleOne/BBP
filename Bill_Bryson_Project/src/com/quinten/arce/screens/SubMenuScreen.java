@@ -113,8 +113,7 @@ public class SubMenuScreen implements Screen
 		 
 		 	public void touchUp (InputEvent event, float x, float y, int pointer, int button) 
 		 	{
-		 		Gdx.app.log(Reference.LOG_NAME, event.getListenerActor().getName() + "Button was pressed.");
-		 		
+		 		screenCompleted(Difficulty.deserialise(event.getListenerActor().getName()));
 		 	}
 		};
 		
@@ -127,6 +126,11 @@ public class SubMenuScreen implements Screen
 		stage.addActor(mediumButton);
 		stage.addActor(hardButton);
 		stage.addActor(extremeButton);
+	}
+	
+	private void screenCompleted(Difficulty difficulty)
+	{
+		game.startGame(difficulty);
 	}
 	
 	@Override

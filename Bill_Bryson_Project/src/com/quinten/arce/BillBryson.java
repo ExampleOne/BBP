@@ -1,8 +1,10 @@
 package com.quinten.arce;
 
-import java.io.FileNotFoundException;
+import java.util.ArrayList;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
+import com.quinten.arce.game.Difficulty;
 import com.quinten.arce.game.Question;
 import com.quinten.arce.screens.MainMenu;
 import com.quinten.arce.screens.SplashScreen;
@@ -21,27 +23,51 @@ public class BillBryson extends Game
 	@Override
 	public void create()
 	{
-		startDisplaying();
-		loadQuestions();
+		startLoading();
+		setScreen(new SplashScreen(this));
+		
+		
 	}
 	
-	private void startDisplaying()
+	private void startLoading()
 	{
-		final BillBryson me = this;
-		Runnable displayScreen = new Runnable()
+		Runnable load = new Runnable()
 		{
-			@Override
 			public void run()
 			{
-				setScreen(new SplashScreen(me));
+				loadQuestions();
 			}
 		};
-		new Thread(displayScreen).run();
+		new Thread(load).start();
 	}
 	
 	private void loadQuestions()
 	{
-		Question[] questions = Question.getQuestions();
+		ArrayList<Question> questions = Question.getQuestions();
+		Difficulty.EASY.setQuestions(filterQuestions(Difficulty.EASY, questions));
+		Difficulty.MEDIUM.setQuestions(filterQuestions(Difficulty.MEDIUM, questions));
+		Difficulty.HARD.setQuestions(filterQuestions(Difficulty.HARD, questions));
+		Difficulty.EXTREME.setQuestions(filterQuestions(Difficulty.EXTREME, questions));
+		
+		try
+		{
+			Thread.currentThread().join();
+		} catch (InterruptedException e)
+		{
+			e.printStackTrace();
+		}
+	}
+	
+	private ArrayList<Question> filterQuestions(Difficulty difficulty, ArrayList<Question> questions)
+	{
+		ArrayList<Question> result = new ArrayList<Question>();
+		
+		for(Question question : questions)
+		{
+			if(difficulty.isThisDifficulty(question.getDifficultyLevel())) result.add(question);
+		}
+		
+		return result;
 	}
 	
 	public void splashScreenCompleted()
@@ -52,6 +78,11 @@ public class BillBryson extends Game
 	public void subMenuScreen()
 	{
 		setScreen(new SubMenuScreen(this));
+	}
+	
+	public void startGame(Difficulty difficulty)
+	{
+		Gdx.app.log(Reference.LOG_NAME, difficulty + " button was pressed.");
 	}
 
 	@Override
@@ -83,9 +114,4 @@ public class BillBryson extends Game
 	{
 		super.resume();
 	}
-	
-	private Question[] easyQuestions;
-	private Question[] meduimQuestions;
-	private Question[] hardQuestions;
-	private Question[] extremeQuestions;
 }

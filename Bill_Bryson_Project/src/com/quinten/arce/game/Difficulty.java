@@ -1,5 +1,7 @@
 package com.quinten.arce.game;
 
+import java.util.ArrayList;
+
 public enum Difficulty
 {
 	EASY("Easy", (byte) 1, (byte) 10, (byte) 4), 
@@ -16,7 +18,7 @@ public enum Difficulty
 		this.name = name;
 		this.minDifficulty = minDifficulty;
 		this.maxDifficulty = maxDifficulty;
-		this.numQuestions = numQuestions;
+		this.numAnswers = numQuestions;
 	}
 	
 	public static Difficulty deserialise(String string)
@@ -49,8 +51,19 @@ public enum Difficulty
 		return ((difficultyLevel >= minDifficulty) && (difficultyLevel <= maxDifficulty));
 	}
 	
+	public void setQuestions(ArrayList<Question> questions)
+	{
+		this.questions = questions;
+	}
+	
+	public ArrayList<Question> getQuestions()
+	{
+		return questions;
+	}
+	
 	private String name;
 	private byte minDifficulty;
 	private byte maxDifficulty;
-	private byte numQuestions;
+	private byte numAnswers;
+	private ArrayList<Question> questions;
 }
