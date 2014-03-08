@@ -20,6 +20,11 @@ public class SubMenuScreen implements Screen
 {
 	public static final float BUTTON_WIDTH = 250F;
 	public static final float BUTTON_HEIGHT = 75F;
+	public static final float COMPONENT_COUNT = 11F;
+	public static final float BUTTON_X_PROPORTION = .65F;
+	public static final float TEXT_X_PROPORTION = .2F;
+	
+	public static final String SELECTION_PROMPT = "Select your difficulty:";
 	
 	public SubMenuScreen(BillBryson game)
 	{
@@ -36,9 +41,9 @@ public class SubMenuScreen implements Screen
 		
 		spriteBatch.begin();
 		
-		blackBitmapFont.draw(spriteBatch, Reference.NAME, 
-				(Gdx.graphics.getWidth() - (blackBitmapFont.getMultiLineBounds(Reference.NAME).width)) / 2,
-				easyButton.getY() + easyButton.getHeight() + 200F);//TODO add a logo on the main menu
+		blackBitmapFont.draw(spriteBatch, SELECTION_PROMPT, 
+				(Gdx.graphics.getWidth() - (blackBitmapFont.getMultiLineBounds(Reference.NAME).width)) * TEXT_X_PROPORTION,
+				Gdx.graphics.getHeight() >>> 1);//TODO add a logo on the main menu
 		blackBitmapFont.draw(spriteBatch, "Version: " + Reference.VERSION, 0, 
 				blackBitmapFont.getMultiLineBounds("Version: " + Reference.VERSION).height + 1);
 		stage.draw();
@@ -50,6 +55,15 @@ public class SubMenuScreen implements Screen
 	public void resize(int width, int height)
 	{
 		stage.setViewport(width, height, true);
+		
+		easyButton.setX(Gdx.graphics.getWidth() * BUTTON_X_PROPORTION);
+		easyButton.setY(8/COMPONENT_COUNT * Gdx.graphics.getHeight());
+		mediumButton.setX(Gdx.graphics.getWidth() * BUTTON_X_PROPORTION);
+		mediumButton.setY(6/COMPONENT_COUNT * Gdx.graphics.getHeight());
+		hardButton.setX(Gdx.graphics.getWidth() * BUTTON_X_PROPORTION);
+		hardButton.setY(4/COMPONENT_COUNT * Gdx.graphics.getHeight());
+		extremeButton.setX(Gdx.graphics.getWidth() * BUTTON_X_PROPORTION);
+		extremeButton.setY(2/COMPONENT_COUNT * Gdx.graphics.getHeight());
 	}
 	
 	@Override
@@ -85,6 +99,11 @@ public class SubMenuScreen implements Screen
 		extremeButton.setWidth(BUTTON_WIDTH);
 		extremeButton.setHeight(BUTTON_HEIGHT);
 		
+		easyButton.setName(Difficulty.EASY.getName());
+		mediumButton.setName(Difficulty.MEDIUM.getName());
+		hardButton.setName(Difficulty.HARD.getName());
+		extremeButton.setName(Difficulty.EXTREME.getName());
+		
 		InputListener listener = new InputListener()
 		{
 			public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) 
@@ -94,7 +113,7 @@ public class SubMenuScreen implements Screen
 		 
 		 	public void touchUp (InputEvent event, float x, float y, int pointer, int button) 
 		 	{
-		 		Gdx.app.log(Reference.LOG_NAME, event.getListenerActor().getName() + "button was pressed.");
+		 		Gdx.app.log(Reference.LOG_NAME, event.getListenerActor().getName() + "Button was pressed.");
 		 	}
 		};
 		
@@ -102,6 +121,11 @@ public class SubMenuScreen implements Screen
 		mediumButton.addListener(listener);
 		hardButton.addListener(listener);
 		extremeButton.addListener(listener);
+		
+		stage.addActor(easyButton);
+		stage.addActor(mediumButton);
+		stage.addActor(hardButton);
+		stage.addActor(extremeButton);
 	}
 	
 	@Override
