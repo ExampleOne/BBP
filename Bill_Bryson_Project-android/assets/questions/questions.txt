@@ -1,0 +1,3 @@
+QUESTION=test
+ANSWER=test
+DIFFICULTY=5
