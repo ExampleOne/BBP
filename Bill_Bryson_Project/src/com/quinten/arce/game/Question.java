@@ -15,6 +15,7 @@ public class Question
 	public static final String DIFFICULTY_MARKER = "DIFFICUTLY=";
 	public static final String QUESTION_IMAGE_PATH_MARKER = "QUESTION_IMAGE_PATH=";
 	public static final String ANSWER_IMAGE_PATH_MARKER = "ANSWER_IMAGE_PATH=";
+	public static final String CATAGORY_MARKER = "CATAGORY=";
 	public static final String COMMENT_MARKER = "//";
 	
 	/**
@@ -107,6 +108,7 @@ public class Question
 			else if(upper.startsWith(DIFFICULTY_MARKER)) result.difficultyLevel = Byte.parseByte(i.substring(DIFFICULTY_MARKER.length()));
 			else if(upper.startsWith(QUESTION_IMAGE_PATH_MARKER)) questionImages.add(i.substring(QUESTION_IMAGE_PATH_MARKER.length()));
 			else if(upper.startsWith(ANSWER_IMAGE_PATH_MARKER)) answerImages.add(i.substring(ANSWER_IMAGE_PATH_MARKER.length()));
+			else if(upper.startsWith(CATAGORY_MARKER)) result.catagory = Catagory.deserialise(i.substring(CATAGORY_MARKER.length()));
 		}
 		
 		result.answerImagePaths = Arrays.copyOf(answerImages.toArray(), answerImages.size(), String[].class);
@@ -140,6 +142,11 @@ public class Question
 		return answerImagePaths;
 	}
 	
+	public final Catagory getCatagory()
+	{
+		return catagory;
+	}
+	
 	@Override
 	public String toString()
 	{
@@ -153,5 +160,6 @@ public class Question
 	private String[] answers = {Reference.ANSWERS_UNAVAILANLE};
 	private byte difficultyLevel;
 	private String[] questionImagePaths = {};
-	private String[] answerImagePaths = {};	
+	private String[] answerImagePaths = {};
+	private Catagory catagory;
 }

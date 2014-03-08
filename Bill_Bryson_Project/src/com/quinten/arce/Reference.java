@@ -15,7 +15,7 @@ public class Reference
 	public static final int WIDTH = 1080;
 	public static final int HEIGHT = 720;
 	
-	public static final boolean USE_GL_2_0 = false;
+	public static final boolean USE_GL_2_0 = true;
 	
 	public static final String DATA_LOC = "";
 	public static final String PICTURE_LOC = DATA_LOC + "images";
