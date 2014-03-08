@@ -117,6 +117,7 @@ public class MainMenu implements Screen
 		textureAtlas.dispose();
 		whiteBitmapFont.dispose();
 		blackBitmapFont.dispose();
+		smallblackBitmapFont.dispose();
 		stage.dispose();
 	}
 	
