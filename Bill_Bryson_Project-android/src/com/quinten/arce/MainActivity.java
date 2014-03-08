@@ -1,11 +1,11 @@
-package com.quinten.bindIt;
+package com.quinten.arce;
 
 import android.os.Bundle;
 
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
-import com.quinten.bindIt.BillBryson;
-import com.quinten.bindIt.Reference;
+import com.quinten.arce.BillBryson;
+import com.quinten.arce.Reference;
 
 public class MainActivity extends AndroidApplication {
     @Override

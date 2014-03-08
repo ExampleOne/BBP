@@ -1,9 +1,9 @@
-package com.quinten.bindIt;
+package com.quinten.arce;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import com.quinten.bindIt.BillBryson;
-import com.quinten.bindIt.Reference;
+import com.quinten.arce.BillBryson;
+import com.quinten.arce.Reference;
 
 public class Main {
 	public static void main(String[] args) {

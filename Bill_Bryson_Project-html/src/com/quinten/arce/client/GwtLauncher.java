@@ -1,10 +1,10 @@
-package com.quinten.bindIt.client;
+package com.quinten.arce.client;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.backends.gwt.GwtApplication;
 import com.badlogic.gdx.backends.gwt.GwtApplicationConfiguration;
-import com.quinten.bindIt.BillBryson;
-import com.quinten.bindIt.Reference;
+import com.quinten.arce.BillBryson;
+import com.quinten.arce.Reference;
 
 public class GwtLauncher extends GwtApplication {
 	@Override

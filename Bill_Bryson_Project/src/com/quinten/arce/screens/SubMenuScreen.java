@@ -1,9 +1,9 @@
-package com.quinten.bindIt.screens;
+package com.quinten.arce.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL10;
-import com.quinten.bindIt.BillBryson;
+import com.quinten.arce.BillBryson;
 
 public class SubMenuScreen implements Screen
 {

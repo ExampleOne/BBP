@@ -1,9 +1,9 @@
-package com.quinten.bindIt;
+package com.quinten.arce;
 
 import com.badlogic.gdx.Game;
-import com.quinten.bindIt.screens.MainMenu;
-import com.quinten.bindIt.screens.SplashScreen;
-import com.quinten.bindIt.screens.SubMenuScreen;
+import com.quinten.arce.screens.MainMenu;
+import com.quinten.arce.screens.SplashScreen;
+import com.quinten.arce.screens.SubMenuScreen;
 
 /**
  * The main class in the project.

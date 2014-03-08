@@ -1,4 +1,4 @@
-package com.quinten.bindIt.screens;
+package com.quinten.arce.screens;
 
 import aurelienribon.tweenengine.BaseTween;
 import aurelienribon.tweenengine.Tween;
@@ -14,9 +14,9 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.quinten.bindIt.BillBryson;
-import com.quinten.bindIt.Reference;
-import com.quinten.bindIt.tweenAccessors.SpriteTween;
+import com.quinten.arce.BillBryson;
+import com.quinten.arce.Reference;
+import com.quinten.arce.tweenAccessors.SpriteTween;
 
 public class SplashScreen implements Screen 
 {

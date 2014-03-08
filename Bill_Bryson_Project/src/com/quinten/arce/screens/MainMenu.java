@@ -1,4 +1,4 @@
-package com.quinten.bindIt.screens;
+package com.quinten.arce.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -12,8 +12,8 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
-import com.quinten.bindIt.BillBryson;
-import com.quinten.bindIt.Reference;
+import com.quinten.arce.BillBryson;
+import com.quinten.arce.Reference;
 
 public class MainMenu implements Screen
 {

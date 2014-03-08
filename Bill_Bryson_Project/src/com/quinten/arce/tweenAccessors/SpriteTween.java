@@ -1,4 +1,4 @@
-package com.quinten.bindIt.tweenAccessors;
+package com.quinten.arce.tweenAccessors;
 
 import aurelienribon.tweenengine.TweenAccessor;
 
