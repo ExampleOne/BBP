@@ -3,9 +3,9 @@ package com.quinten.arce;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
 import com.quinten.arce.game.Difficulty;
 import com.quinten.arce.game.Question;
+import com.quinten.arce.screens.Jeopardy;
 import com.quinten.arce.screens.MainMenu;
 import com.quinten.arce.screens.SplashScreen;
 import com.quinten.arce.screens.SubMenuScreen;
@@ -82,7 +82,7 @@ public class BillBryson extends Game
 	
 	public void startGame(Difficulty difficulty)
 	{
-		Gdx.app.log(Reference.LOG_NAME, difficulty + " button was pressed.");
+		setScreen(new Jeopardy(this, difficulty));		
 	}
 
 	@Override

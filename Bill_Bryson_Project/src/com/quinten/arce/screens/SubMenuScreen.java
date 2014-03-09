@@ -130,6 +130,7 @@ public class SubMenuScreen implements Screen
 	
 	private void screenCompleted(Difficulty difficulty)
 	{
+		Gdx.app.log(Reference.LOG_NAME, difficulty + " button was pressed.");
 		game.startGame(difficulty);
 	}
 	
