@@ -31,6 +31,15 @@ public enum Difficulty
 		throw new IllegalArgumentException("Cannot identify difficulty named: " + string);
 	}
 	
+	public static Difficulty highestDifficultyOf(byte difficultyLevel)
+	{
+		if(EXTREME.isThisDifficulty(difficultyLevel)) return EXTREME;
+		else if(HARD.isThisDifficulty(difficultyLevel)) return HARD;
+		else if(MEDIUM.isThisDifficulty(difficultyLevel)) return MEDIUM;
+		else if(EASY.isThisDifficulty(difficultyLevel)) return EASY;
+		else throw new IllegalArgumentException("Invalid difficulty level: " + difficultyLevel);
+	}
+	
 	public String getName()
 	{
 		return name;
@@ -59,6 +68,11 @@ public enum Difficulty
 	public ArrayList<Question> getQuestions()
 	{
 		return questions;
+	}
+	
+	public byte getNumAnswers()
+	{
+		return numAnswers;
 	}
 	
 	private String name;

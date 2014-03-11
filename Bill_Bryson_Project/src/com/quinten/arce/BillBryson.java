@@ -3,6 +3,7 @@ package com.quinten.arce;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.Game;
+import com.quinten.arce.debug.Stopwatch;
 import com.quinten.arce.game.Difficulty;
 import com.quinten.arce.game.Question;
 import com.quinten.arce.screens.Jeopardy;
@@ -43,11 +44,25 @@ public class BillBryson extends Game
 	
 	private void loadQuestions()
 	{
-		ArrayList<Question> questions = Question.getQuestions();
+		Stopwatch watch = new Stopwatch();
+		watch.startTimer();
+		ArrayList<Question> questions = new ArrayList<Question>();
+		
+		try
+		{
+			questions = Question.getQuestions();
+		} catch(IllegalArgumentException exception)
+		{
+			exception.printStackTrace();
+			System.exit(2);
+		}
+		
 		Difficulty.EASY.setQuestions(filterQuestions(Difficulty.EASY, questions));
 		Difficulty.MEDIUM.setQuestions(filterQuestions(Difficulty.MEDIUM, questions));
 		Difficulty.HARD.setQuestions(filterQuestions(Difficulty.HARD, questions));
 		Difficulty.EXTREME.setQuestions(filterQuestions(Difficulty.EXTREME, questions));
+		
+		watch.endTimer("for loading questions");
 		
 		try
 		{
@@ -77,12 +92,18 @@ public class BillBryson extends Game
 	
 	public void subMenuScreen()
 	{
+		stopwatch.startTimer();
+		getScreen().dispose();
 		setScreen(new SubMenuScreen(this));
+		stopwatch.endTimer("between switching screens");
 	}
 	
 	public void startGame(Difficulty difficulty)
 	{
-		setScreen(new Jeopardy(this, difficulty));		
+		stopwatch.startTimer();
+		getScreen().dispose();
+		setScreen(new Jeopardy(this, difficulty));
+		stopwatch.endTimer("between switching screens");
 	}
 
 	@Override
@@ -114,4 +135,6 @@ public class BillBryson extends Game
 	{
 		super.resume();
 	}
+	
+	private Stopwatch stopwatch = new Stopwatch();
 }
