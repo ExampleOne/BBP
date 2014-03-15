@@ -45,7 +45,7 @@ public enum Difficulty
 	 * @return The index of the first occurrence of a question
 	 *		of the specified difficulty.
 	 */
-	public static int findFirstOfDifficulty(Difficulty difficulty, byte difficultyLevel)
+	public static int findFirstOfDifficulty(Difficulty difficulty, byte difficultyLevel, Catagory catagory)
 	{
 		ArrayList<Question> questions = difficulty.getQuestions();
 		int startIndex = 0;
@@ -57,11 +57,20 @@ public enum Difficulty
 			mid = (endIndex - startIndex) >>> 1;
 			if(questions.get(mid).getDifficultyLevel() == difficultyLevel)
 			{
-				while(questions.get(--mid).getDifficultyLevel() == difficultyLevel) {}
-				return mid + 1;
+				try
+				{
+					while(questions.get(--mid).getDifficultyLevel() == difficultyLevel) 
+					{if(mid == 0) return mid;}
+					while(questions.get(++mid).getCatagory() != catagory) {}
+				} catch(IndexOutOfBoundsException e)
+				{
+					break;
+				}
+				return mid;
 			}
 			if(questions.get(mid).getDifficultyLevel() > difficultyLevel)
 			{
+				if(startIndex == mid) break;
 				startIndex = mid;
 			} else
 			{
@@ -111,5 +120,5 @@ public enum Difficulty
 	private byte minDifficulty; //inclusive
 	private byte maxDifficulty; //inclusive
 	private byte numAnswers;
-	private ArrayList<Question> questions;
+	private ArrayList<Question> questions = new ArrayList<Question>();
 }

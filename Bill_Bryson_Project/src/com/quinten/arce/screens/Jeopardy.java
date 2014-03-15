@@ -102,19 +102,23 @@ public class Jeopardy implements Screen
 		byte state;
 		byte catagoryId;
 		Question candidate = null;
+		int indexCandidate = 0;
 		
 		for(Catagory catagory : Catagory.values())
 		{
-			state = 0;
+			state = difficulty.getMinDifficulty();
 			catagoryId = catagory.getId();
 			for(int i = 0, length = buttons[catagoryId].length; i < length; i++)
 			{
 				for(byte a = 0; a < 10 && 
 						(contains(result[catagoryId], candidate) || candidate == null); a++)
 				{
-					
+					indexCandidate = Difficulty.findFirstOfDifficulty(difficulty, (byte) (state + random.nextInt(difference)), catagory);
+					if(indexCandidate == -1) continue;
+					candidate = difficulty.getQuestions().get(indexCandidate);
 				}
 				state += difference;
+				result[catagoryId][i] = candidate;
 			}
 		}
 		return result;
@@ -131,7 +135,6 @@ public class Jeopardy implements Screen
 	
 	private BillBryson game;
 	private Difficulty difficulty;
-	private int score;
 	private Stage stage;
 	private BitmapFont whiteBitmapFont;
 	private BitmapFont blackBitmapFont;

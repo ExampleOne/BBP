@@ -33,11 +33,11 @@ public class MainMenu implements Screen
 		
 		spriteBatch.begin();
 		
+		smallBitmapFont.draw(spriteBatch, "Version: " + Reference.VERSION, 0, 
+				smallBitmapFont.getMultiLineBounds("Version: " + Reference.VERSION).height + 1);
 		blackBitmapFont.draw(spriteBatch, Reference.NAME, 
 				(Gdx.graphics.getWidth() - (blackBitmapFont.getMultiLineBounds(Reference.NAME).width)) / 2,
 				playButton.getY() + playButton.getHeight() + 200F);//TODO add a logo on the main menu
-		blackBitmapFont.draw(spriteBatch, "Version: " + Reference.VERSION, 0, 
-				blackBitmapFont.getMultiLineBounds("Version: " + Reference.VERSION).height + 1);
 		stage.draw();
 		
 		spriteBatch.end();
@@ -52,9 +52,11 @@ public class MainMenu implements Screen
 		playButton.setX((width >>> 1) - playButton.getWidth() / 2);
 		playButton.setY((height >>> 1) - playButton.getHeight() / 2);
 		blackBitmapFont.setColor(0, 0, 0, 1);
-		smallblackBitmapFont.setColor(0, 0, 0, 1);
 		
 		stage.addActor(playButton);
+		
+		blackBitmapFont.setColor(0, 0, 0, 1);
+		smallBitmapFont.setColor(0, 0, 0, 1);
 	}
 
 	@Override
@@ -70,7 +72,7 @@ public class MainMenu implements Screen
 		
 		whiteBitmapFont = new BitmapFont(Gdx.files.internal(Reference.FONT_LOC + "/whiteFont.fnt"));
 		blackBitmapFont = new BitmapFont(Gdx.files.internal(Reference.FONT_LOC + "/blackFont.fnt"));
-		smallblackBitmapFont = new BitmapFont(Gdx.files.internal(Reference.FONT_LOC + "/smallBlackFont.fnt"));
+		smallBitmapFont = new BitmapFont(Gdx.files.internal(Reference.FONT_LOC + "/smallBlackFont.fnt"));
 		
 		playButtonStyle = new TextButtonStyle();
 		playButtonStyle.up = skin.getDrawable("button_released");
@@ -117,7 +119,7 @@ public class MainMenu implements Screen
 		textureAtlas.dispose();
 		whiteBitmapFont.dispose();
 		blackBitmapFont.dispose();
-		smallblackBitmapFont.dispose();
+		smallBitmapFont.dispose();
 		stage.dispose();
 	}
 	
@@ -125,7 +127,7 @@ public class MainMenu implements Screen
 	private Stage stage;
 	private BitmapFont whiteBitmapFont;
 	private BitmapFont blackBitmapFont;
-	private BitmapFont smallblackBitmapFont;//not working
+	private BitmapFont smallBitmapFont;
 	private TextureAtlas textureAtlas;
 	private Skin skin;
 	private SpriteBatch spriteBatch;
