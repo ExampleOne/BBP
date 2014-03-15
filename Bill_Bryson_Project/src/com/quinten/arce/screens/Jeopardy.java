@@ -13,7 +13,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.quinten.arce.BillBryson;
 import com.quinten.arce.Reference;
+import com.quinten.arce.game.Catagory;
 import com.quinten.arce.game.Difficulty;
+import com.quinten.arce.game.Question;
 import com.quinten.arce.game.QuestionButton;
 
 public class Jeopardy implements Screen
@@ -42,7 +44,7 @@ public class Jeopardy implements Screen
 	@Override
 	public void show()
 	{
-		assignImages();
+		assignQuestions();
 		
 		stage = new Stage();
 		Gdx.input.setInputProcessor(stage);
@@ -86,70 +88,45 @@ public class Jeopardy implements Screen
 		skin.dispose();
 	}
 	
-	private void assignImages()
+	private void assignQuestions()
 	{
-		printArray(getSortedBytes());		
-	}
-	
-	private byte[][] getSortedBytes()
-	{
-		Random random = new Random();
-		byte[][] result = new byte[buttons.length][buttons[0].length];
-		final byte difference = (byte) (difficulty.getMaxDifficulty() - difficulty.getMinDifficulty() + 1);
+		Question[][] sortedQuestions = getSortedQuestions();
 		
-		for(int i = 0; i < buttons.length; i++)
+	}
+	
+	private Question[][] getSortedQuestions()
+	{
+		Question[][] result = new Question[buttons.length][buttons[0].length];
+		Random random = new Random();
+		final byte difference = (byte) ((difficulty.getMaxDifficulty() - difficulty.getMinDifficulty())/Reference.NUM_SCORES);
+		byte state;
+		byte catagoryId;
+		Question candidate = null;
+		
+		for(Catagory catagory : Catagory.values())
 		{
-			for(int j = 0; j < buttons[i].length; j++)
+			state = 0;
+			catagoryId = catagory.getId();
+			for(int i = 0, length = buttons[catagoryId].length; i < length; i++)
 			{
-				result[i][j] = (byte) (difficulty.getMinDifficulty() + random.nextInt(difference));
+				for(byte a = 0; a < 10 && 
+						(contains(result[catagoryId], candidate) || candidate == null); a++)
+				{
+					
+				}
+				state += difference;
 			}
-			result[i] = sortBytes(result[i]);
 		}
 		return result;
 	}
 	
-	private static byte[] sortBytes(byte[] array)
+	public static <T> boolean contains(T[] array, T object)
 	{
-		int index = -1;
-		for(int a = 0; a < array.length; a++)
+		for(T i : array)
 		{
-			index = findIndexofSmallestAfter(array, a); 
-			if(index != a)
-			{
-				array = swap(array, index, a);
-			}
+			if(i == object) return true;
 		}
-		return array;
-	}
-	
-	private static int findIndexofSmallestAfter(byte[] array, int startIndex)
-	{
-		int result = startIndex;
-		for(int i = startIndex; i < array.length; i++)
-		{
-			if(array[i] < array[result]) result = i;
-		}
-		return result;
-	}
-	
-	private static byte[] swap(byte[] array, int firstIndex, int secondIndex)
-	{
-		byte temp = array[firstIndex];
-		array[firstIndex] = array[secondIndex];
-		array[secondIndex] = temp;
-		return array;
-	}
-	
-	public static void printArray(byte[][] array)
-	{
-		for(byte[] i : array)
-		{
-			for(byte j : i)
-			{
-				System.out.print("[" + j + "]");
-			}
-			System.out.println();
-		}
+		return false;
 	}
 	
 	private BillBryson game;
@@ -163,5 +140,5 @@ public class Jeopardy implements Screen
 	private SpriteBatch spriteBatch;
 	
 	private TextButtonStyle buttonStyle;
-	private QuestionButton[][] buttons = new QuestionButton[3][5];
+	private QuestionButton[][] buttons = new QuestionButton[Catagory.values().length][Reference.NUM_SCORES];
 }

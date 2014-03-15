@@ -1,10 +1,12 @@
 package com.quinten.arce.game;
 
+
 public enum Catagory
 {
 	PHYSICS("Physics"),
 	CHEMISTRY("Chemistry"),
-	BIOLOGY("Biology");
+	BIOLOGY("Biology"),
+	MISC("Misc");
 	
 	Catagory(String name)
 	{
@@ -25,5 +27,21 @@ public enum Catagory
 		return name;
 	}
 	
+	public byte getId()
+	{
+		return id;
+	}
+	
 	private String name;
+	private byte id;
+	
+	private static byte count = 0;
+	
+	static
+	{
+		for(Catagory catagory : Catagory.values())
+		{
+			catagory.id = count++;
+		}
+	}
 }

@@ -73,7 +73,7 @@ public class BillBryson extends Game
 		}
 	}
 	
-	private ArrayList<Question> filterQuestions(Difficulty difficulty, ArrayList<Question> questions)
+	private  static ArrayList<Question> filterQuestions(Difficulty difficulty, ArrayList<Question> questions)
 	{
 		ArrayList<Question> result = new ArrayList<Question>();
 		
@@ -82,7 +82,30 @@ public class BillBryson extends Game
 			if(difficulty.isThisDifficulty(question.getDifficultyLevel())) result.add(question);
 		}
 		
+		sortQuestionsByDifficulty(questions);
 		return result;
+	}
+	
+	private static ArrayList<Question> sortQuestionsByDifficulty(ArrayList<Question> questions)
+	{
+		int indexOfLargest;
+		for(int i = 0; i < questions.size(); i++)
+		{
+			indexOfLargest = i;
+			for(int j = i; j < questions.size(); j++)
+			{
+				if(questions.get(indexOfLargest).getDifficultyLevel() < questions.get(j).getDifficultyLevel()) indexOfLargest = j;
+			}
+			if(indexOfLargest != i) swap(questions, i, indexOfLargest);
+		}
+		return questions;
+	}
+	
+	public static <T> void swap(ArrayList<T> list, int firstIndex, int secondIndex)
+	{
+		T temp = list.get(secondIndex);
+		list.set(secondIndex, list.get(firstIndex));
+		list.set(firstIndex, temp);
 	}
 	
 	public void splashScreenCompleted()

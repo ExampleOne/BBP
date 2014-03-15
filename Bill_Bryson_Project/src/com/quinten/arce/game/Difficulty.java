@@ -40,6 +40,38 @@ public enum Difficulty
 		else throw new IllegalArgumentException("Invalid difficulty level: " + difficultyLevel);
 	}
 	
+	/**
+	 * requires a sorted array.
+	 * @return The index of the first occurrence of a question
+	 *		of the specified difficulty.
+	 */
+	public static int findFirstOfDifficulty(Difficulty difficulty, byte difficultyLevel)
+	{
+		ArrayList<Question> questions = difficulty.getQuestions();
+		int startIndex = 0;
+		int endIndex = questions.size();
+		int mid = (endIndex - startIndex) >>> 1;
+		
+		while(startIndex < endIndex)
+		{
+			mid = (endIndex - startIndex) >>> 1;
+			if(questions.get(mid).getDifficultyLevel() == difficultyLevel)
+			{
+				while(questions.get(--mid).getDifficultyLevel() == difficultyLevel) {}
+				return mid + 1;
+			}
+			if(questions.get(mid).getDifficultyLevel() > difficultyLevel)
+			{
+				startIndex = mid;
+			} else
+			{
+				endIndex = mid;
+			}
+		}
+		
+		return -1;
+	}
+	
 	public String getName()
 	{
 		return name;
@@ -76,8 +108,8 @@ public enum Difficulty
 	}
 	
 	private String name;
-	private byte minDifficulty;
-	private byte maxDifficulty;
+	private byte minDifficulty; //inclusive
+	private byte maxDifficulty; //inclusive
 	private byte numAnswers;
 	private ArrayList<Question> questions;
 }
