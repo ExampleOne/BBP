@@ -1,7 +1,8 @@
-package com.quinten.arce.game;
+package com.quinten.arce.screens;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.quinten.arce.game.Question;
 
 public class QuestionButton extends TextButton
 {

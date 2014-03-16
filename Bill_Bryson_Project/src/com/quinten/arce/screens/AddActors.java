@@ -2,17 +2,17 @@ package com.quinten.arce.screens;
 
 import java.util.ArrayList;
 
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.quinten.arce.game.DelayedEvent;
 import com.quinten.arce.game.Occurable;
 
 public class AddActors extends Occurable
 {
-	public AddActors(Stage stage, ArrayList<Button> buttons)
+	public AddActors(Stage stage, ArrayList<Actor> actors)
 	{
 		this.stage = stage;
-		this.buttons = buttons;
+		this.buttons = actors;
 	}
 	
 	@Override
@@ -25,6 +25,6 @@ public class AddActors extends Occurable
 	}
 	
 	Stage stage;
-	ArrayList<Button> buttons;
+	ArrayList<Actor> buttons;
 	
 }

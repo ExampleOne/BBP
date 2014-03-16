@@ -9,6 +9,8 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
@@ -32,14 +34,7 @@ public class MainMenu implements Screen
 		stage.act(delta);
 		
 		spriteBatch.begin();
-		
-		smallBitmapFont.draw(spriteBatch, "Version: " + Reference.VERSION, 0, 
-				smallBitmapFont.getMultiLineBounds("Version: " + Reference.VERSION).height + 1);
-		blackBitmapFont.draw(spriteBatch, Reference.NAME, 
-				(Gdx.graphics.getWidth() - (blackBitmapFont.getMultiLineBounds(Reference.NAME).width)) / 2,
-				playButton.getY() + playButton.getHeight() + 200F);//TODO add a logo on the main menu
-		stage.draw();
-		
+		stage.draw();		
 		spriteBatch.end();
 	}
 
@@ -47,13 +42,13 @@ public class MainMenu implements Screen
 	public void resize(int width, int height)
 	{
 		stage.setViewport(width, height, true);
-		stage.clear();
 		
 		playButton.setX((width >>> 1) - playButton.getWidth() / 2);
 		playButton.setY((height >>> 1) - playButton.getHeight() / 2);
-		blackBitmapFont.setColor(0, 0, 0, 1);
-		
-		stage.addActor(playButton);
+		title.setX((width >>> 1) - title.getWidth() / 2);
+		title.setY(playButton.getY() + (height - playButton.getY() + playButton.getHeight())/2);//TODO turn into logo
+		version.setX(0);
+		version.setY(0);
 		
 		blackBitmapFont.setColor(0, 0, 0, 1);
 		smallBitmapFont.setColor(0, 0, 0, 1);
@@ -97,6 +92,17 @@ public class MainMenu implements Screen
 		});
 		playButton.setWidth(400F);
 		playButton.setHeight(100F);
+		
+		LabelStyle titleStyle = new LabelStyle();
+		titleStyle.font = blackBitmapFont;
+		title = new Label(Reference.NAME, titleStyle);
+		LabelStyle versionStyle = new LabelStyle();
+		versionStyle.font = smallBitmapFont;
+		version = new Label(Reference.VERSION, versionStyle);
+		
+		stage.addActor(playButton);
+		stage.addActor(title);
+		stage.addActor(version);
 	}
 
 	@Override
@@ -134,4 +140,6 @@ public class MainMenu implements Screen
 	
 	private TextButtonStyle playButtonStyle;
 	private TextButton playButton;
+	private Label title;
+	private Label version;
 }

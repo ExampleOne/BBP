@@ -1,5 +1,6 @@
 package com.quinten.arce.screens;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 import com.badlogic.gdx.Gdx;
@@ -15,16 +16,15 @@ import com.quinten.arce.BillBryson;
 import com.quinten.arce.Reference;
 import com.quinten.arce.game.Catagory;
 import com.quinten.arce.game.Difficulty;
+import com.quinten.arce.game.Player;
 import com.quinten.arce.game.Question;
-import com.quinten.arce.game.QuestionButton;
 
 public class Jeopardy implements Screen
 {
 	
-	public Jeopardy(BillBryson game, Difficulty difficulty)
+	public Jeopardy(BillBryson game)
 	{
 		this.game = game;
-		this.difficulty = difficulty;
 	}
 	
 	@Override
@@ -90,11 +90,15 @@ public class Jeopardy implements Screen
 	
 	private void assignQuestions()
 	{
-		Question[][] sortedQuestions = getSortedQuestions();
+		 ArrayList<Player> list = Player.getActivePlayers();
+		for(Player i : list)
+		{
+			i.setQuestions(getSortedQuestions(i.getDifficulty()));
+		}
 		
 	}
 	
-	private Question[][] getSortedQuestions()
+	private Question[][] getSortedQuestions(Difficulty difficulty)
 	{
 		Question[][] result = new Question[buttons.length][buttons[0].length];
 		Random random = new Random();
@@ -134,7 +138,6 @@ public class Jeopardy implements Screen
 	}
 	
 	private BillBryson game;
-	private Difficulty difficulty;
 	private Stage stage;
 	private BitmapFont whiteBitmapFont;
 	private BitmapFont blackBitmapFont;

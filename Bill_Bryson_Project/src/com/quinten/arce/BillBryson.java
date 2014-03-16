@@ -3,8 +3,10 @@ package com.quinten.arce;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
 import com.quinten.arce.debug.Stopwatch;
 import com.quinten.arce.game.Difficulty;
+import com.quinten.arce.game.Player;
 import com.quinten.arce.game.Question;
 import com.quinten.arce.screens.Jeopardy;
 import com.quinten.arce.screens.MainMenu;
@@ -121,11 +123,12 @@ public class BillBryson extends Game
 		stopwatch.endTimer("between switching screens");
 	}
 	
-	public void startGame(Difficulty difficulty)
+	public void startGame()
 	{
+		Gdx.app.log(Reference.LOG_NAME, "Starting Game with: " + Player.getActivePlayers());
 		stopwatch.startTimer();
 		getScreen().dispose();
-		setScreen(new Jeopardy(this, difficulty));
+		setScreen(new Jeopardy(this));
 		stopwatch.endTimer("between switching screens");
 	}
 

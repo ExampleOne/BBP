@@ -1,8 +1,10 @@
-package com.quinten.arce.game;
+package com.quinten.arce.screens;
 
 import com.badlogic.gdx.scenes.scene2d.ui.ButtonGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+import com.quinten.arce.game.Player;
 
 public class PlayerButton extends CheckBox
 {
@@ -40,6 +42,17 @@ public class PlayerButton extends CheckBox
 		return player;
 	}
 
+	public void setNameEntry(TextField nameEntry)
+	{
+		this.nameEntry = nameEntry;
+	}
+	
+	public TextField getNameEntry()
+	{
+		return nameEntry;
+	}
+
 	private ButtonGroup buttonGroup;
+	private TextField nameEntry;
 	private Player player;
 }
