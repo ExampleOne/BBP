@@ -106,6 +106,12 @@ public enum Player
 	{
 		return questions;
 	}
+	
+	@Override
+	public String toString()
+	{
+		return name;
+	}
 
 	private int score = 0;
 	private String name;

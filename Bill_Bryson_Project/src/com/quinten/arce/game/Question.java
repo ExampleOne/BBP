@@ -13,6 +13,7 @@ public class Question
 	public static final String QUESTION_MARKER = "QUESTION=";
 	public static final String ANSWER_MARKER = "ANSWER=";
 	public static final String WRONG_ANSWER_MARKER = "WRONG ANSWER=";
+	public static final String FINAL_IMAGE_PATH_MARKER = "FINAL IMAGE=";
 	public static final String DIFFICULTY_MARKER = "DIFFICULTY=";
 	public static final String QUESTION_IMAGE_PATH_MARKER = "QUESTION IMAGE PATH=";
 	public static final String ANSWER_IMAGE_PATH_MARKER = "ANSWER IMAGE PATH=";
@@ -26,22 +27,20 @@ public class Question
 	 * Constructor, however not expected to be used,
 	 * allows for some null arguments.
 	 * @param question canNOT be null.
-	 * @param answers canNOT be null.
+	 * @param answerGroup canNOT be null.
 	 * @param difficultyLevel canNOT be null.
 	 * @param questionImagePath
 	 * @param answerImagePath
 	 */
-	public Question(String question, ArrayList<String> answers, ArrayList<String> wrongAnswers, byte difficultyLevel, 
+	public Question(String question, String answer, ArrayList<Answer> wrongAnswers, byte difficultyLevel, 
 			ArrayList<String> questionImagePath, ArrayList<String> answerImagePath)
 	{
 		this.question = question;
-		this.answers = answers;
-		this.wrongAnswers = wrongAnswers;
+		Answer correctAnswer = new Answer(answer);
+		this.answerGroup = new AnswerGroup(correctAnswer, wrongAnswers);
 		this.difficultyLevel = difficultyLevel;
 		if(questionImagePath != null)
 			this.questionImagePaths = questionImagePath;
-		if(questionImagePath != null)
-			this.answerImagePaths = answerImagePath;
 	}
 	
 	/**
@@ -100,10 +99,13 @@ public class Question
 	private static Question decode(ArrayList<String> components)
 	{
 		Question result = new Question();
-		ArrayList<String> answers = new ArrayList<String>();
-		ArrayList<String> wrongAnswers = new ArrayList<String>();
+		Answer answer = new Answer();
+		AnswerGroup answerGroup = new AnswerGroup(answer);
+		answer.isCorrect = true;
 		ArrayList<String> questionImages= new ArrayList<String>();
-		ArrayList<String> answerImages = new ArrayList<String>();
+		String finalImagePath = "";
+		
+		Answer lastAnswer = answer;
 		
 		String lineNum;
 		int j;
@@ -121,24 +123,32 @@ public class Question
 			i = i.substring(j);
 			upper = i.toUpperCase();
 			if(upper.startsWith(QUESTION_MARKER)) result.question = i.substring(QUESTION_MARKER.length());
-			else if(upper.startsWith(ANSWER_MARKER)) answers.add(i.substring(ANSWER_MARKER.length()));
-			else if(upper.startsWith(WRONG_ANSWER_MARKER)) wrongAnswers.add(i.substring(WRONG_ANSWER_MARKER.length()));
-			else if(upper.startsWith(DIFFICULTY_MARKER)) result.difficultyLevel = Byte.parseByte(i.substring(DIFFICULTY_MARKER.length()));
+			else if(upper.startsWith(ANSWER_MARKER))
+			{
+				answer.text = (i.substring(ANSWER_MARKER.length()));
+				lastAnswer = answer;
+			} else if(upper.startsWith(WRONG_ANSWER_MARKER)) 
+			{
+				answerGroup.addAnswer(new Answer(i.substring(WRONG_ANSWER_MARKER.length())));
+				lastAnswer = answerGroup.getAnswers().get(answerGroup.getAnswers().size() - 1);
+			} else if(upper.startsWith(DIFFICULTY_MARKER)) result.difficultyLevel = Byte.parseByte(i.substring(DIFFICULTY_MARKER.length()));
 			else if(upper.startsWith(QUESTION_IMAGE_PATH_MARKER)) questionImages.add(i.substring(QUESTION_IMAGE_PATH_MARKER.length()));
-			else if(upper.startsWith(ANSWER_IMAGE_PATH_MARKER)) answerImages.add(i.substring(ANSWER_IMAGE_PATH_MARKER.length()));
-			else if(upper.startsWith(CATAGORY_MARKER)) result.catagory = Catagory.deserialise(i.substring(CATAGORY_MARKER.length()));
+			else if(upper.startsWith(ANSWER_IMAGE_PATH_MARKER))
+			{
+				lastAnswer.imageLocation = i.substring(ANSWER_IMAGE_PATH_MARKER.length());
+			} else if(upper.startsWith(CATAGORY_MARKER)) result.catagory = Catagory.deserialise(i.substring(CATAGORY_MARKER.length()));
+			else if(upper.startsWith(FINAL_IMAGE_PATH_MARKER))  finalImagePath = i.substring(FINAL_IMAGE_PATH_MARKER.length());
 			else throw new IllegalArgumentException("Line: " + lineNum + " " + UNKNOWN_TOKEN_EXCEPTION + i);
 		}
 		
-		result.answerImagePaths = answerImages;
 		result.questionImagePaths = questionImages;
-		result.answers = answers;
-		result.wrongAnswers = wrongAnswers;
+		result.answerGroup = answerGroup;
+		result.finalImagePath = finalImagePath;
 		if(result.question.equals(Reference.QUESTION_UNAVAILABLE)) throw new IllegalArgumentException("Question missing question: " + result.question);
-		else if(result.answers == null) throw new IllegalArgumentException("Question missing answer: " + result.question);
+		else if(result.answerGroup == null) throw new IllegalArgumentException("Question missing answer: " + result.question);
 		else if(result.catagory == null) throw new IllegalArgumentException("Question missing catagory: " + result.question);
-		else if(result.wrongAnswers == null) throw new IllegalArgumentException("Question missing wrong answers: " + result.question);
-		else if(result.wrongAnswers.size() +  1 < Difficulty.highestDifficultyOf(result.getDifficultyLevel()).getNumAnswers())//throws error if invalid difficulty 
+		else if(result.answerGroup.getAnswers().isEmpty()) throw new IllegalArgumentException("Question missing wrong answers: " + result.question);
+		else if(result.answerGroup.getAnswers().size() < Difficulty.highestDifficultyOf(result.getDifficultyLevel()).getNumAnswers())//throws error if invalid difficulty 
 			throw new IllegalArgumentException("Question lacking wrong answers: " + result.question);
 		else return result;
 	}
@@ -162,9 +172,9 @@ public class Question
 		return question;
 	}
 	
-	public final ArrayList<String> getAnswers()
+	public final Answer getCorrectAnswer()
 	{
-		return answers;
+		return answerGroup.getCorrectAnswer();
 	}
 	
 	public final ArrayList<String> getQuestionImagePaths()
@@ -172,19 +182,24 @@ public class Question
 		return questionImagePaths;
 	}
 	
-	public final ArrayList<String> getAnswerImagePaths()
-	{
-		return answerImagePaths;
-	}
-	
 	public final Catagory getCatagory()
 	{
 		return catagory;
 	}
 	
-	public final ArrayList<String> getWrongAnswers()
+	public final ArrayList<Answer> getWrongAnswers()
 	{
-		return wrongAnswers;
+		return answerGroup.getWrongAnswers();
+	}
+	
+	public final String getFinalImagePath()
+	{
+		return finalImagePath;
+	}
+	
+	public final AnswerGroup getAnswerGroup()
+	{
+		return answerGroup;
 	}
 	
 	@Override
@@ -207,10 +222,9 @@ public class Question
 	private static AtomicBoolean fileRead = new AtomicBoolean(false); 
 	
 	private String question = Reference.QUESTION_UNAVAILABLE;
-	private ArrayList<String> answers;
-	private ArrayList<String> wrongAnswers;
+	private AnswerGroup answerGroup;
+	private String finalImagePath;
 	private byte difficultyLevel = DEFAULT_DIFFICULTY_LEVEL;
 	private ArrayList<String> questionImagePaths;
-	private ArrayList<String> answerImagePaths;
 	private Catagory catagory;
 }

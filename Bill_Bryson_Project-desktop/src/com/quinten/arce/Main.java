@@ -14,6 +14,6 @@ public class Main {
 		cfg.width = Reference.WIDTH;
 		cfg.height = Reference.HEIGHT;
 		
-		new LwjglApplication(new BillBryson(), cfg);
+		new LwjglApplication(new BillBryson(), cfg); 
 	}
 }

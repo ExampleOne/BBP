@@ -18,6 +18,7 @@ public enum Catagory
 		if(string.equalsIgnoreCase(PHYSICS.name)) return PHYSICS;
 		else if(string.equalsIgnoreCase(CHEMISTRY.name)) return CHEMISTRY;
 		else if(string.equalsIgnoreCase(BIOLOGY.name)) return BIOLOGY;
+		else if(string.equalsIgnoreCase(MISC.name)) return MISC;
 		
 		throw new IllegalArgumentException("Cannot identify catagory named: " + string);
 	}

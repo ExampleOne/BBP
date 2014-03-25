@@ -17,12 +17,11 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.ButtonGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox.CheckBoxStyle;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
-import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField.TextFieldStyle;
 import com.badlogic.gdx.utils.Array;
 import com.quinten.arce.BillBryson;
@@ -129,6 +128,7 @@ public class SubMenuScreen implements Screen, Completable
 		buttonStyle.up = skin.getDrawable("button_released");
 		buttonStyle.down = skin.getDrawable("button_pressed");
 		buttonStyle.font = smallBitmapFont;
+		buttonStyle.font.setColor(0, 0, 0, 1);
 		buttonStyle.checkboxOff = skin.getDrawable("checkBox_off");
 		buttonStyle.checkboxOn = skin.getDrawable("checkBox_on");
 		
@@ -142,6 +142,7 @@ public class SubMenuScreen implements Screen, Completable
 		{
 			TextButtonStyle style = new TextButtonStyle(buttonStyle);
 			style.font = blackBitmapFont;
+			style.font.setColor(0, 0, 0, 1);
 			playButton = new PlayButton(PLAY_PROMPT, style);
 			playButton.setWidth(BUTTON_WIDTH * 2);
 			playButton.setHeight(BUTTON_HEIGHT * 2);
@@ -211,9 +212,11 @@ public class SubMenuScreen implements Screen, Completable
 				playerButtons[i].setNameEntry(nameEntries[i]);
 				difficulties[i].add(playerButtons[i], easyButtons[i], mediumButtons[i], hardButtons[i], extremeButtons[i]);
 			}
+			buttonStyle.font.setColor(0, 0, 0, 1);
+			
 			LabelStyle titleStyle = new LabelStyle();
 			titleStyle.font = blackBitmapFont;
-			title = new Label(Reference.NAME, titleStyle);
+			title = new Label(SELECTION_PROMPT, titleStyle);
 			LabelStyle versionStyle = new LabelStyle();
 			versionStyle.font = smallBitmapFont;
 			version = new Label(Reference.VERSION, versionStyle);
